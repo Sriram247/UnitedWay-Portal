@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UnitedWay Portal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        nav {
+            display: flex;
+            gap: 20px;
+            margin: auto auto;
+        }
+        
+        nav a {
+            color: white;
+            text-decoration: none;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .button {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: center;
+        }
+        
+        .button:hover {
+            background-color: #3498db;
+        }
+    </style>
+
+    <style>
+
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%; /* Adjust width as needed */
+            margin: 20px auto; /* Center the table */
+            border-collapse: collapse; /* Merge borders */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Shadow effect */
+        }
+
+        th, td {
+            padding: 12px; /* Cell padding */
+            text-align: left; /* Align text */
+            border: 1px solid #ddd; /* Cell border */
+        }
+
+        th {
+            background-color: #4CAF50; /* Header background color */
+            color: white; /* Header text color */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2; /* Zebra stripes */
+        }
+
+        tr:hover {
+            background-color: #ddd; /* Hover effect */
+        }
+    </style>
+
+    <style>
+
+        /* Modal Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+</head>
+<body>
+    <header>
+        <nav>
+            <a href="#">Housing and Shelter Projects</a>
+            <a href="#">Public Policy Announcements</a>
+        </nav>
+        <button class="button">Sign In</button>
+    </header>
+    <div class="container">
+<table>
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Link</th>
+                <th>Location</th>
+                <th>Number of Units</th>
+                <th>Dwelling Type</th>
+                <th>Project Phase</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for project in projects %}
+            <tr onclick="openModal('{{ project.summarize|escapejs }}')">  <!-- Add onClick event -->
+                
+                    <td>{{ project.title }}</td>
+                    <td><a href="{{ project.link }}" target="_blank">{{ project.link }}</a></td>
+                    <td>{{ project.location }}</td>
+                    <td>{{ project.no_of_units }}</td>
+                    <td>{{ project.dwelling_type }}</td>
+                    <td>{{ project.project_phase }}</td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="6" style="text-align:center;">No projects found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+        <!-- The Modal -->
+        <div id="summaryModal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="closeModal()">&times;</span>
+                <h2>Project Summary</h2>
+                <p id="summaryText"></p>  <!-- Text for the summary -->
+            </div>
+        </div>
+
+
+    <script>
+        // Function to open the modal and set the summary text
+        function openModal(summary) {
+            document.getElementById("summaryText").innerText = summary;
+            document.getElementById("summaryModal").style.display = "block";
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            document.getElementById("summaryModal").style.display = "none";
+        }
+
+        // Close the modal when the user clicks anywhere outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById("summaryModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    </div>
+</body>
+</html>

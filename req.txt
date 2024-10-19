@@ -1,0 +1,8 @@
+beautifulsoup4
+requests
+transformers
+torch
+spacy
+#python -m spacy download en_core_web_sm
+
+django-import-export
